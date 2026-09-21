@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Angelina</title>
+
+    <!-- Google Fonts: Elegantes y románticas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!--
+    ========================================================
+    FONDO: Collage continuo fotográfico
+    ========================================================
+    -->
+    <div id="bg-collage" class="bg-collage">
+        <div class="bg-overlay"></div>
+    </div>
+
+    <!-- Partículas del fondo -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!--
+    ========================================================
+    MÚSICA DE FONDO
+    ========================================================
+    -->
+    <audio id="background-music" preload="auto" autoplay loop>
+        <source src="./not-you-too.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón Global de Retroceso -->
+    <button id="btn-back" class="nav-back-btn">← Atrás</button>
+
+    <main id="app-container">
+
+        <!--
+        ========================================================
+        ESCENA 1: INICIO
+        ========================================================
+        -->
+        <section id="scene-1" class="scene active">
+            <div class="content-box">
+                <p class="intro-text fade-in-up">
+                    Tengo algo preparado para ti...
+                </p>
+                <h1 class="fade-in-up delay-1">
+                    ¿Quieres ver tu regalo?
+                </h1>
+                <div class="buttons-container fade-in-up delay-2">
+                    <button id="btn-yes" class="btn primary">SÍ</button>
+                    <button id="btn-no" class="btn secondary">NO</button>
+                </div>
+                <p id="no-message" class="hidden-message">
+                    Vamos, por favor, hice esto con mucho amor.
+                </p>
+            </div>
+        </section>
+
+
+        <!--
+        ========================================================
+        ESCENA 2: FELIZ CUMPLEAÑOS
+        ========================================================
+        -->
+        <section id="scene-2" class="scene">
+            <div class="content-box text-center">
+                <h2 class="title-large cinematic-text">
+                    Feliz cumpleaños, Angelina
+                </h2>
+                <p class="subtitle cinematic-text delay-2">
+                    Te amo mucho.
+                </p>
+                <button id="btn-continue-s2" class="btn primary cinematic-text delay-4 fade-in">
+                    Continuar
+                </button>
+            </div>
+        </section>
+
+
+        <!--
+        ========================================================
+        ESCENA 3: FLORES AMARILLAS
+        ========================================================
+        -->
+        <section id="scene-3" class="scene">
+            <div class="flower-scene-container">
+                <div id="animation-stage" class="animation-stage">
+                    <div id="seed" class="seed"></div>
+                    <div id="plant-container" class="plant-container">
+                        <div class="stem"></div>
+                        <div class="heart-canopy"></div>
+                    </div>
+                </div>
+
+                <div id="flower-texts" class="flower-texts">
+                    <p class="msg-1">Feliz día de las flores amarillas.</p>
+                    <p class="msg-2">Cada girasol que ves aquí es un latido de mi corazón.</p>
+                    <p class="msg-3">Así como el sol ilumina los campos, tú iluminas mi vida.</p>
+                    <p class="msg-4">Que esas flores te recuerden lo especial que eres para mí.</p>
+                    <p class="msg-5 highlight">Te amo Lina</p>
+                    <p class="msg-6 italic">Eres el sol que hace florecer cada uno de mis días.</p>
+                    <button id="btn-continue-s3" class="btn primary align-left fade-in">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!--
+        ========================================================
+        ESCENA 4: 10 RAZONES
+        ========================================================
+        -->
+        <section id="scene-4" class="scene">
+            <div class="reasons-container">
+                <h2 class="section-title">
+                    10 razones por las que te amo
+                </h2>
+                <div id="reasons-list" class="reasons-list">
+                    <p class="reason" data-index="1">Por lo inteligente que eres.</p>
+                    <p class="reason" data-index="2">Por la forma tan especial en que conectamos.</p>
+                    <p class="reason" data-index="3">Por lo genuina que eres.</p>
+                    <p class="reason" data-index="4">Por lo buena persona que eres.</p>
+                    <p class="reason" data-index="5">Por la forma en que me tratas.</p>
+                    <p class="reason" data-index="6">Por cómo cuidas de mí.</p>
+                    <p class="reason" data-index="7">Por cómo haces que hasta los momentos simples sean especiales.</p>
+                    <p class="reason" data-index="8">Por la tranquilidad que siento cuando estoy contigo.</p>
+                    <p class="reason" data-index="9">Por la manera en que haces que quiera ser una mejor persona.</p>
+                    <p class="reason" data-index="10">Porque simplemente eres tú, y eso es más que suficiente para amarte.</p>
+                </div>
+                <button id="btn-continue-s4" class="btn primary fade-in hidden">
+                    Y ahora, nuestros recuerdos
+                </button>
+            </div>
+        </section>
+
+
+        <!--
+        ========================================================
+        ESCENA 5: GALERÍA DE RECUERDOS
+        ========================================================
+        -->
+        <section id="scene-5" class="scene">
+            <div class="gallery-container">
+                <h2 class="section-title gallery-title">
+                    Nuestra pequeña galería
+                </h2>
+
+                <div class="gallery-grid">
+                    <!-- Fila superior: VIDEO -->
+                    <div class="video-row">
+                        <div class="video-card">
+                            <video src="./video 1.mp4" autoplay loop muted playsinline></video>
+                        </div>
+                    </div>
+
+                    <!-- Fila inferior: FOTOS FLOTANTES -->
+                    <div class="floating-gallery-bottom">
+                        <div class="photo-card p1">
+                            <div class="photo-inner"><img src="./foto_fondo.jpeg" alt="Recuerdo 1"></div>
+                        </div>
+                        <div class="photo-card p2">
+                            <div class="photo-inner"><img src="./foto2.jpeg" alt="Recuerdo 2"></div>
+                        </div>
+                        <div class="photo-card p3">
+                            <div class="photo-inner"><img src="./foto3.jpeg" alt="Recuerdo 3"></div>
+                        </div>
+                        <div class="photo-card p4">
+                            <div class="photo-inner"><img src="./foto11.jpeg" alt="Recuerdo 4"></div>
+                        </div>
+                        <div class="photo-card p5">
+                            <div class="photo-inner"><img src="./foto 4.jpeg" alt="Recuerdo 5"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-carta" class="btn valentine-btn fade-in hidden">
+                    ¿Quieres ver tu carta de cumpleaños?
+                </button>
+            </div>
+        </section>
+
+
+        <!--
+        ========================================================
+        ESCENA 6: CARTA
+        ========================================================
+        -->
+        <section id="scene-6" class="scene">
+            <div class="letter-scene-container">
+
+                <div class="letter-paper">
+                    <div class="coffee-ring"></div>
+                    <p>Querida Angelina,</p>
+                    <p>
+                        Quiero aprovechar este día tan especial, un día como hoy que naciste para decirte lo mucho que te
+                        amo. Eres una persona súper especial para mí, te lo podría describir con palabras: eres súper
+                        inteligente, divertida y buena persona.
+                    </p>
+                    <p>
+                        Espero que hoy en el día de tu cumpleaños lo puedas pasar excelente ya que es lo único que una
+                        persona como tú se merece.
+                    </p>
+                    <p>
+                        Te amé ayer, hoy y espero poder amarte para siempre. No puedo explicar lo que siento cuando estoy
+                        cerca de ti. Eres una persona muy especial para mí y así como lo eres, espero que tengas un día
+                        súper especial.
+                    </p>
+                    <p>Que Dios te bendiga.</p>
+                    <p class="signature">Angelina.</p>
+                </div>
+
+                <div class="letter-photos">
+                    <img src="./foto_fondo.jpeg" alt="Fondo" class="photo-polaroid">
+                    <img src="./foto11.jpeg" alt="Foto 11" class="photo-polaroid">
+                </div>
+
+                <button id="btn-continue-s6" class="btn primary fade-in hidden-btn">
+                    Siguiente
+                </button>
+
+            </div>
+        </section>
+
+
+        <!--
+        ========================================================
+        ESCENA 7: FINAL
+        ========================================================
+        -->
+        <section id="scene-7" class="scene">
+            <div class="content-box text-center">
+                <h2 class="title-huge cinematic-text final-name">
+                    Angelina
+                </h2>
+                <p class="subtitle cinematic-text delay-2 final-msg1">
+                    Gracias por existir.
+                </p>
+                <p class="subtitle cinematic-text delay-4 final-msg2 highlight-gold">
+                    Te amo muchísimo.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="animacion.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,820 @@
+/* 
+========================================================
+VARIABLES Y PALETA DE COLORES (Cálidos y naturales)
+======================================================== 
+*/
+:root {
+    --color-sunflower: #F2C94C; /* Amarillo girasol */
+    --color-gold: #D4AF37;      /* Dorado suave */
+    --color-cream: #FDFBF7;     /* Crema */
+    --color-warm-white: #FFFCF5;/* Blanco cálido */
+    --color-leaf: #6E885F;      /* Verde natural */
+    --color-stem: #8B5A2B;      /* Marrón suave para tierra y tallos */
+    --color-text-main: #3E362E; /* Texto principal oscuro pero cálido */
+    
+    /* Tipografías */
+    --font-romantic: 'Playfair Display', serif;
+    --font-body: 'Cormorant Garamond', serif;
+}
+
+/* 
+========================================================
+RESETEOS BÁSICOS
+======================================================== 
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-cream);
+    color: var(--color-text-main);
+    overflow: hidden; /* Evitar scroll nativo, controlamos la navegación por escenas */
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 
+========================================================
+FONDO CONTINUO: COLLAGE FOTOGRÁFICO
+======================================================== 
+*/
+.bg-collage {
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 120vw;
+    height: 120vh;
+    z-index: -2;
+    background-image: url('./foto_fondo.jpeg');
+    background-repeat: repeat;
+    background-size: 15vw auto; 
+    animation: pan-bg 120s linear infinite alternate;
+}
+
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(253, 251, 247, 0.75);
+    mix-blend-mode: hard-light;
+    backdrop-filter: blur(1px); 
+}
+
+@keyframes pan-bg {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-5%, -5%); }
+}
+
+#particles-canvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 
+========================================================
+SISTEMA DE ESCENAS
+======================================================== 
+*/
+#app-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scene {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease-in-out;
+}
+
+.scene.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* 
+========================================================
+TIPOGRAFÍA COMÚN Y CONTENEDORES
+======================================================== 
+*/
+.content-box {
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+}
+
+.intro-text {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: var(--color-stem);
+}
+
+h1, h2.title-large, h2.title-huge, .section-title {
+    font-family: var(--font-romantic);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--color-text-main);
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+h2.title-large {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+h2.title-huge {
+    font-size: 5rem;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--color-stem);
+}
+
+.highlight-gold {
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+/* 
+========================================================
+BOTONES
+======================================================== 
+*/
+.btn {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    padding: 0.8rem 2.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn.primary {
+    border: 1px solid var(--color-text-main);
+    color: var(--color-text-main);
+}
+
+.btn.primary:hover {
+    background-color: var(--color-text-main);
+    color: var(--color-cream);
+}
+
+.btn.secondary {
+    border: 1px solid transparent;
+    color: var(--color-stem);
+    text-decoration: underline;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
+}
+
+#btn-no.running {
+    position: fixed;
+    z-index: 9999;
+    transition: top 0.2s ease-out, left 0.2s ease-out;
+}
+
+.hidden-message {
+    margin-top: 2rem;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--color-gold);
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.hidden-message.show {
+    opacity: 1;
+}
+
+/* BOTÓN GLOBAL DE RETROCESO */
+.nav-back-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: rgba(253, 251, 247, 0.85);
+    border: 1px solid var(--color-stem);
+    color: var(--color-stem);
+    padding: 0.6rem 1.6rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-back-btn.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.nav-back-btn:hover {
+    background: var(--color-stem);
+    color: var(--color-cream);
+    transform: translateY(-2px);
+}
+
+/* 
+========================================================
+ANIMACIONES DE TEXTO
+======================================================== 
+*/
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.delay-1 { animation-delay: 1s; }
+.delay-2 { animation-delay: 2s; }
+.delay-3 { animation-delay: 3s; }
+.delay-4 { animation-delay: 4s; }
+
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cinematic-text {
+    opacity: 0;
+    filter: blur(10px);
+    animation: cinematicIn 2s ease forwards;
+}
+
+@keyframes cinematicIn {
+    to { opacity: 1; filter: blur(0); }
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.fade-in.show {
+    opacity: 1;
+}
+
+/* 
+========================================================
+ESCENA 3: FLORES AMARILLAS
+======================================================== 
+*/
+.flower-scene-container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+    transition: transform 2s ease;
+}
+
+.flower-scene-container.shift-right {
+    transform: translateX(15%);
+}
+
+.animation-stage {
+    position: absolute;
+    width: 450px;
+    height: 70vh;
+    bottom: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.seed {
+    width: 12px;
+    height: 20px;
+    background-color: var(--color-stem);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: absolute;
+    top: -20vh;
+    opacity: 0;
+}
+
+.seed.falling {
+    opacity: 1;
+    animation: fallSeed 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fallSeed {
+    to { top: 98%; opacity: 0; }
+}
+
+.plant-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.stem {
+    width: 6px;
+    height: 0%;
+    background-color: var(--color-leaf);
+    border-radius: 3px;
+    transition: height 4s ease-in-out;
+}
+
+.stem.grow {
+    height: 60%; 
+}
+
+.heart-canopy {
+    position: absolute;
+    bottom: 45%;
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+    transition: all 3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.heart-canopy.bloom {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.heart-canopy::before {
+    content: '';
+    position: absolute;
+    width: 100%; height: 100%;
+}
+
+.sunflower {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-sunflower);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 1s ease;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+.sunflower::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px; height: 12px;
+    background-color: var(--color-stem);
+    border-radius: 50%;
+}
+
+.sunflower.open {
+    opacity: 1;
+    transform: scale(1) rotate(calc(var(--rot) * 1deg));
+}
+
+.flower-texts {
+    position: absolute;
+    left: 5%;
+    width: 40%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease;
+}
+
+.flower-texts.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.flower-texts p {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 1s ease;
+}
+
+.flower-texts p.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.flower-texts p.highlight {
+    font-family: var(--font-romantic);
+    font-size: 2.5rem;
+    color: var(--color-gold);
+}
+
+.flower-texts p.italic {
+    font-style: italic;
+    color: var(--color-stem);
+}
+
+/* 
+========================================================
+ESCENA 4: 10 RAZONES
+======================================================== 
+*/
+.reasons-container {
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.reasons-container .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.reasons-list {
+    position: relative;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reason {
+    position: absolute;
+    font-size: 2rem;
+    font-family: var(--font-romantic);
+    color: var(--color-text-main);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 1.5s ease;
+    text-shadow: 0 2px 10px rgba(253, 251, 247, 0.8);
+}
+
+.reason.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.reason.exit {
+    opacity: 0;
+    transform: scale(1.05);
+}
+
+#btn-continue-s4 {
+    margin-top: 3rem;
+}
+#btn-continue-s4.hidden {
+    display: none;
+}
+
+/* 
+========================================================
+ESCENA 5: GALERÍA DE RECUERDOS (CORREGIDA)
+======================================================== 
+*/
+.gallery-container {
+    width: 100vw;
+    height: 100vh;
+    perspective: 1000px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    box-sizing: border-box;
+}
+
+.gallery-title {
+    position: absolute;
+    top: 5%;
+    font-size: 2.2rem;
+    z-index: 10;
+}
+
+.gallery-grid {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.video-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 50;
+}
+
+.video-card {
+    width: 280px;
+    padding: 8px;
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transform: rotate(2deg);
+    transition: transform 0.3s ease;
+    border-radius: 4px;
+}
+
+.video-card:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 100;
+}
+
+.video-card video {
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+}
+
+.floating-gallery-bottom {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-card {
+    position: absolute;
+    width: 200px;
+    height: 220px;
+    padding: 10px 10px 25px 10px;
+    background: #fff; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: all 0.5s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-card:hover {
+    transform: translate(-50%, -50%) scale(1.15) rotate(0deg) !important;
+    z-index: 100 !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.photo-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
+    overflow: hidden;
+}
+
+/* Ajuste para que NINGUNA foto se corte */
+.photo-inner img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+#btn-carta {
+    position: absolute;
+    bottom: 5%;
+    z-index: 10;
+}
+
+.hidden-btn {
+    display: none;
+}
+
+/* 
+========================================================
+ESCENA 6: CARTA (CORREGIDA PARA AJUSTARSE A PANTALLA)
+======================================================== 
+*/
+.valentine-btn {
+    background-color: #d11a2a;
+    color: white;
+    border-color: #d11a2a;
+}
+.valentine-btn:hover {
+    background-color: white;
+    color: #d11a2a;
+}
+
+.letter-scene-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 85vh;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.letter-paper {
+    background: #f4e8d2;
+    color: #4a3b32;
+    padding: 25px 30px;
+    font-family: var(--font-romantic);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    max-height: 60vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    line-height: 1.5;
+    border-radius: 4px;
+    text-align: left;
+    transform: rotate(-1deg);
+}
+
+.letter-paper::-webkit-scrollbar {
+    width: 6px;
+}
+.letter-paper::-webkit-scrollbar-thumb {
+    background: #c8b293;
+    border-radius: 4px;
+}
+
+.letter-paper p {
+    margin-bottom: 0.8rem;
+}
+
+.letter-paper .signature {
+    text-align: right;
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+}
+
+/* Mancha de café */
+.coffee-ring {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    border: 5px solid rgba(111, 78, 55, 0.2);
+    border-radius: 50%;
+    box-shadow: inset 0 0 10px rgba(111, 78, 55, 0.1);
+    transform: scaleY(0.8) rotate(20deg);
+}
+.coffee-ring::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 85px;
+    height: 85px;
+    border: 3px solid rgba(111, 78, 55, 0.1);
+    border-radius: 50%;
+    transform: rotate(45deg);
+}
+
+.letter-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.photo-polaroid {
+    width: 170px;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border: 8px solid white;
+    border-bottom-width: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.5s ease;
+}
+
+.photo-polaroid:nth-child(1) { transform: rotate(4deg); }
+.photo-polaroid:nth-child(2) { transform: rotate(-3deg); }
+
+.photo-polaroid:hover {
+    transform: scale(1.1) rotate(0deg);
+    z-index: 10;
+}
+
+#btn-continue-s6 {
+    position: absolute;
+    bottom: -60px;
+}
+
+/* 
+========================================================
+RESPONSIVE (MÓVIL Y TABLET)
+======================================================== 
+*/
+@media (max-width: 768px) {
+    .bg-collage {
+        background-size: 35vw auto;
+    }
+    
+    h1 { font-size: 2.2rem; }
+    h2.title-large { font-size: 2.5rem; }
+    h2.title-huge { font-size: 3.5rem; }
+    .subtitle { font-size: 1.2rem; }
+    .intro-text { font-size: 1.2rem; }
+    
+    .flower-scene-container {
+        flex-direction: column;
+    }
+    
+    .flower-scene-container.shift-right {
+        transform: translateY(-10%); 
+    }
+    
+    .flower-texts {
+        position: relative;
+        left: 0;
+        width: 90%;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    
+    .flower-texts p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    .flower-texts p.highlight {
+        font-size: 2rem;
+    }
+    
+    .animation-stage {
+        height: 40vh;
+        bottom: 0;
+        position: relative;
+    }
+    
+    .reasons-container .section-title {
+        font-size: 1.8rem;
+    }
+    .reason {
+        font-size: 1.3rem;
+    }
+    
+    .gallery-title {
+        top: 10%;
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    
+    .letter-paper {
+        padding: 20px;
+        font-size: 0.95rem; 
+        transform: rotate(0deg);
+        max-width: 90vw;
+        max-height: 55vh;
+    }
+
+    .letter-scene-container {
+        gap: 15px;
+    }
+
+    .video-card {
+        width: 230px;
+    }
+}
